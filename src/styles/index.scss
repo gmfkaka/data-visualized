@@ -1,0 +1,263 @@
+/*
+* 布局UI
+*/
+@import "./base/reset.scss";
+@import "./base/var.scss";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body, #app {
+  height:100%;
+  overflow: hidden;
+}
+::-webkit-scrollbar {/*隐藏动条*/
+    display: none;
+}
+
+.flex {
+  @include layout(flex);
+}
+
+.hg-flex {
+  @include layout(flex);
+  @include layout-align(center);
+  @include layout-items(center);
+}
+
+.flex-one {
+  @include layout-flex(1);
+}
+
+.flex-center{
+  align-items: center;
+}
+
+@each $type, $columns in $table-columns {
+  .flex-#{$type} {
+    @include layout-column($columns);
+  }
+  .column-#{$type} {
+    width: $columns;
+  }
+}
+
+// px to rem
+@function px1em($px-values,$baseline-px:16px,$support-for-ie:false){
+  //Conver the baseline into rems
+  $baseline-rem: $baseline-px / 1em * 2;
+  //Print the first line in pixel values
+  @if $support-for-ie {
+      @return $px-values;
+  }
+  //if there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px-values) == "number"{
+      @return $px-values / $baseline-rem;
+  }
+  @else {
+      //Create an empty list that we can dump values into
+      $rem-values:();
+      @each $value in $px-values{
+          // If the value is zero or not a number, return it
+          @if $value == 0 or type-of($value) != "number"{
+              $rem-values: append($rem-values, $value / $baseline-rem);
+          }
+      }
+      @return $rem-values;
+  }
+}
+
+// px to rem
+@function px2em($px-values,$baseline-px:16px,$support-for-ie:false){
+  //Conver the baseline into rems
+  $baseline-rem: $baseline-px / 1em * 6.25;
+  //Print the first line in pixel values
+  @if $support-for-ie {
+      @return $px-values;
+  }
+  //if there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px-values) == "number"{
+      @return $px-values / $baseline-rem;
+  }
+  @else {
+      //Create an empty list that we can dump values into
+      $rem-values:();
+      @each $value in $px-values{
+          // If the value is zero or not a number, return it
+          @if $value == 0 or type-of($value) != "number"{
+              $rem-values: append($rem-values, $value / $baseline-rem);
+          }
+      }
+      @return $rem-values;
+  }
+}
+
+// px转em,第二个参数可以控制倍数
+@function pxem($px-values,$base-multiple: 6.25, $baseline-px:16px,$support-for-ie:false){
+  //Conver the baseline into rems
+  $baseline-rem: $baseline-px / 1em * $base-multiple;
+  //Print the first line in pixel values
+  @if $support-for-ie {
+      @return $px-values;
+  }
+  //if there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px-values) == "number"{
+      @return $px-values / $baseline-rem;
+  }
+  @else {
+      //Create an empty list that we can dump values into
+      $rem-values:();
+      @each $value in $px-values{
+          // If the value is zero or not a number, return it
+          @if $value == 0 or type-of($value) != "number"{
+              $rem-values: append($rem-values, $value / $baseline-rem);
+          }
+      }
+      @return $rem-values;
+  }
+}
+
+// px转rem,第二个参数可以控制倍数
+@function pxrem($px-values,$base-multiple: 6.25, $baseline-px:16px,$support-for-ie:false){
+  //Conver the baseline into rems
+  $baseline-rem: $baseline-px / 1rem * $base-multiple;
+  //Print the first line in pixel values
+  @if $support-for-ie {
+      @return $px-values;
+  }
+  //if there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px-values) == "number"{
+      @return $px-values / $baseline-rem;
+  }
+  @else {
+      //Create an empty list that we can dump values into
+      $rem-values:();
+      @each $value in $px-values{
+          // If the value is zero or not a number, return it
+          @if $value == 0 or type-of($value) != "number"{
+              $rem-values: append($rem-values, $value / $baseline-rem);
+          }
+      }
+      @return $rem-values;
+  }
+}
+
+.clear {
+  @include clearfix();
+}
+
+/* flex */
+.sys-flex{display: -webkit-flex;display: -ms-flexbox;display: flex;}
+.sys-flex-center{-webkit-align-items: center;-ms-flex-align: center;align-items: center;}
+.sys-flex-one{-webkit-flex: 1;-ms-flex: 1;flex: 1;}
+.sys-vertical{-webkit-box-orient:vertical;-ms-flex-direction:column; flex-direction: column}
+.sys-pack-center{-webkit-box-pack: center;}
+.flex-justify-center{-ms-flex-pack: center;justify-content: center;-webkit-justify-content: center;-moz-justify-content: center;-ms-justify-content: center;}
+.flex-justify-around{-ms-flex-pack: space-around;justify-content: space-around;-webkit-justify-content: space-around;-moz-justify-content: space-around;-ms-justify-content: space-around;}
+.flex-shrink{flex-shrink: 0;-webkit-flex-shrink:0;-moz-flex-shrink:0;-ms-flex-shrink:0;}
+.flex-justify-between{-ms-flex-pack: space-between;justify-content: space-between;-webkit-justify-content: space-between;-moz-justify-content: space-between;-ms-justify-content: space-between;}
+.sys-flex-wrap{flex-wrap: wrap;}
+#call-main{
+  width: 7.5em;
+  height: 7.5em;
+  margin : 0 auto;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  padding: 0.1em;
+  margin-top: -0.4em;
+  .rong-min-window-wrap{
+    width: 100%;
+    height: 1.2em;
+    display: flex;
+    position: absolute;
+    overflow: hidden;
+    overflow-x: scroll;
+    .min-window-list{
+      display: flex;
+    }
+  }
+  .rong-min-window{
+    width: 1.2em;
+    height: 0.9em;
+    cursor: pointer;
+    border: 0.01em solid #ddd;
+    border-radius: 0.03em;
+    overflow: hidden;
+    background: rgba(0,0,0,0.4);
+    margin-right: 0.1em;
+    span{
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 0.5em;
+      color: #ddd;
+    }
+  }
+  .rong-max-window {
+    width: calc(100% - 0.2em);
+    height: calc(100% - 1.3em);
+    position: absolute;
+  }
+  .rong-max-window {
+    video{
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .rong-min-window{
+    video{
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .rong-calllib-emote{
+    canvas{
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%!important;
+      height: 100%!important;
+      // width: 3.25em!important;
+      // height: 5.78em!important;
+      z-index: 9;
+    }
+  }
+  div{
+    &:nth-of-type(2){
+      canvas{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 1em!important;
+        height: 1em!important;
+        z-index: 99999!important;
+      }
+    }
+  }
+
+}
+.vjs-custom-skin .vjs-fluid {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  padding-top: 0 !important;
+}
+.echarts, canvas{
+  display: block;
+  width : 100%!important;
+  height: 100%!important;
+}
+.anchorBL {
+  display: none !important;
+}
+/* 文本截断 */
+.txt-overflow {
+  @include line-overflow(1);
+}

@@ -1,0 +1,164 @@
+/*
+* 变量配置
+* 方法定义
+*/
+
+/*flex*/
+$table-columns : (0 : 0, 5 : 5%, 10 : 10%, 15 : 15%, 20 : 20%, 25 : 25%, 30 : 30%, 35 : 35%,40 : 40%, 50 : 50%)!default;
+
+// Base
+// - Responsive image
+// - Retina image
+// - px2rem size
+
+// Responsive image
+@mixin img-responsive($display: block) {
+  display: $display;
+  max-width: 100%;
+  height: auto;
+}
+
+// Retina image
+@mixin img-retina($file-1x, $file-2x, $width-1x, $height-1x) {
+  background-image: url("#{$file-1x}");
+  background-image: -webkit-image-set(url("#{$file-1x}") 1x, url("#{$file-2x}") 1x);
+  background-image: image-set(url("#{$file-1x}") 1x, url("#{$file-2x}") 2x);
+  background-size: $width-1x $height-1x;
+}
+
+@mixin layout( $flex ){
+  display: $flex;
+}
+
+@mixin layout-flex( $num ){
+  flex: $num;
+}
+
+@mixin layout-direction( $direction ){
+  flex-direction: $direction;
+}
+
+@mixin layout-align( $align ){
+  justify-content: $align;
+}
+
+@mixin layout-items( $items ){
+  align-items: $items;
+}
+
+@mixin layout-wrap( $wrap ){
+  flex-wrap: $wrap;
+}
+@mixin layout-column( $column ){
+  flex: 0 0 $column;
+}
+@mixin layout-order( $num ){
+  order : $num;
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// px to rem
+@function px2rem($px-values,$baseline-px:16px,$support-for-ie:false){
+    //Conver the baseline into rems
+    $baseline-rem: $baseline-px / 1rem * 1;
+    //Print the first line in pixel values
+    @if $support-for-ie {
+        @return $px-values;
+    }
+    //if there is only one (numeric) value, return the property/value line for it.
+    @if type-of($px-values) == "number"{
+        @return $px-values / $baseline-rem;
+    }
+    @else {
+        //Create an empty list that we can dump values into
+        $rem-values:();
+        @each $value in $px-values{
+            // If the value is zero or not a number, return it
+            @if $value == 0 or type-of($value) != "number"{
+                $rem-values: append($rem-values, $value / $baseline-rem);
+            }
+        }
+        @return $rem-values;
+    }
+}
+
+@mixin font-dpr($font-size){
+  font-size: $font-size;
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
+}
+
+/*文本截断*/
+@mixin txt-overflow($width) {
+  max-width:$width;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@mixin line-overflow( $line ){
+  display:-webkit-box;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -webkit-line-clamp:$line;
+  -webkit-box-orient:vertical;
+  word-break: break-word;
+}
+
+/*flex 权重*/
+@each $flex in 1,2,3,4,5,6,7,8,9,10{
+    .flex#{$flex} {
+        flex: $flex;
+    }
+}
+
+/*字体大小*/
+@each $size in 12,14,16,18,20,22,24{
+    .ft#{$size} {
+        font-size:#{$size}px!important;
+    }
+}
+/*宽度*/
+@each $width in 80,100,120,140,150,160,180,200,250,500{
+    .wd#{$width} {
+        width:#{$width}px!important;
+    }
+}
+/*marginTop*/
+@each $mt in 3,5,10,15,20,30,40{
+    .mt#{$mt} {
+        margin-top:#{$mt}px!important;
+    }
+}
+/*marginBottom*/
+@each $mb in 5,10,15,20,30,40,50{
+    .mb#{$mb} {
+        margin-bottom:#{$mb}px!important;
+    }
+}
+/*marginRight*/
+@each $mr in 5,10,15,20,30,80{
+    .mr#{$mr} {
+        margin-right:#{$mr}px!important;
+    }
+}
+/*marginLeft*/
+@each $ml in 5,10,15,20,25,30,40,50,80{
+    .ml#{$ml} {
+        margin-left:#{$ml}px!important;
+    }
+}

@@ -1,0 +1,17 @@
+@import '../index.scss';
+.layout-item{
+  .layout-horizontal{
+    display: flex;
+    height: 100%;
+  }
+  .layout-vertical{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+  .overhidden{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
